@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Domotic Lab</title>
+<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+
+}
+
+</style>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body>
+
+	<center><h2>Domotic Lab</h2></center>
+	<br>
+        <br>
+	Public Ip: <input type="text" id="public_ip" disabled>
+	<br>
+	<br>
+	<br>
+	<br>
+	Temperature °C: <input type="text" id="temperature" disabled>
+	<br>
+	<br>
+	Pressure hPa: <input type="text" id="pressure" disabled>
+	<br>
+	<br>
+	Last update: <input type="text" id="updated" disabled>
+	<br>
+	<br>
+	<p>Led
+	<label class="switch">
+  		<input id="checkbox" type="checkbox">
+	  	<span class="slider round"></span>
+	</label>
+	</p>
+	
+	<br>
+	
+	Send Status:<input type="text" id="status_led">
+	<br>
+	<button id="save_button">Save</button>
+	<button id="clear_button">Clear</button>
+	<button id="load_button">Load</button>
+	
+	<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+	
+	<script>
+		/*
+		$(document).ready(function() {
+    		$('#checkbox').change(function() {
+	        	console.log('on document ready checkbox: ' + this.checked);
+	        	if(this.checked) {
+					dbRef.set({
+						Led:'On'
+					});
+        		} else {
+        			dbRef.set({
+						Led:'Off'
+					});
+        		}
+    		});
+		});
+		*/
+		
+  		// Initialize Firebase
+  		var config = {
+    		apiKey: "your-api-key",
+    		authDomain: "your-authDomain.firebaseapp.com",
+    		databaseURL: "https://your-databaseURL.firebaseio.com",
+    		projectId: "your-projectId",
+    		storageBucket: "your-storageBucket.appspot.com",
+    		messagingSenderId: "your-messagingSenderId"
+  		};
+  		firebase.initializeApp(config);
+		
+		var db = firebase.database();
+		var dbRef = db.ref();
+		
+		var publicIp = db.ref().child('Ip');
+		publicIp.on('value', function(snapshot){
+			console.log('key: ' + JSON.stringify(snapshot.key));
+			console.log('value: ' + JSON.stringify(snapshot.val()));
+			$('#public_ip').val(snapshot.val());
+		});
+		
+		var ledRef = db.ref().child('Led');
+		ledRef.on('value', function(snapshot){
+			//console.log('snapshot: ' + JSON.stringify(snapshot));
+			//console.log('numChildren: ' + JSON.stringify(snapshot.numChildren()));
+			console.log('key: ' + JSON.stringify(snapshot.key));
+			console.log('value: ' + JSON.stringify(snapshot.val()));
+			
+			dbRef.on('value', function(snapshot){
+			
+				$('#status_led').val(snapshot.child('Led').val());
+				
+				$('#checkbox').change(function() {
+			       	console.log('checkbox: ' + this.checked);
+		    	   	if(this.checked) {
+						dbRef.update({
+							Led:'On'
+						});
+    		    	} else {
+	        			dbRef.update({
+							Led:'Off'
+						});
+	        		}
+    			});
+				
+    			if(snapshot.child('Led').val() == 'On') {
+    				console.log('Led is On ');
+    				if( !$('#checkbox').prop('checked') ) {
+    					console.log('checkbox was unchecked, setting to checked now');
+ 					   $('#checkbox').prop('checked', true);
+					}
+    			} else if(snapshot.child('Led').val() == 'Off') {
+    				console.log('Led is Off');
+    				if( $('#checkbox').prop('checked') ) {
+    					console.log('checkbox was checked, setting to unchecked now');
+ 					   $('#checkbox').prop('checked', false);
+					}
+    			}
+    			
+			});
+			
+		});
+		
+		var cTemp = db.ref().child('Temperature');
+		
+		cTemp.on('value', function(snapshot){
+			console.log('key: ' + JSON.stringify(snapshot.key));
+			console.log('value: ' + JSON.stringify(snapshot.val()));
+			$('#temperature').val(snapshot.val());
+		});
+		
+		var pressure = db.ref().child('Pressure');
+		pressure.on('value', function(snapshot){
+			console.log('key: ' + JSON.stringify(snapshot.key));
+			console.log('value: ' + JSON.stringify(snapshot.val()));
+			$('#pressure').val(snapshot.val());
+		});
+		
+		var updated = db.ref().child('Updated');
+		updated.on('value', function(snapshot){
+			console.log('key: ' + JSON.stringify(snapshot.key));
+			console.log('value: ' + JSON.stringify(snapshot.val()));
+			$('#updated').val(snapshot.val());
+		});
+		
+		$('#save_button').click(function(){
+			dbRef.update({
+				Led:$('#status_led').val()
+			});
+		});
+		
+		$('#clear_button').click(function(){
+			$('#status_led').val('');
+		});
+		
+		$('#load_button').click(function(){
+			dbRef.on('value', function(snapshot){
+				$('#status_led').val(snapshot.child('Led').val());
+			});
+		});
+		
+	</script>
+	
+	<footer>
+		<center><b>Powered by: Raspberry Pi + Firebase Realtime Database + Adafruit BMP280</b></center>
+	</footer>
+</body>
+
+</html>
