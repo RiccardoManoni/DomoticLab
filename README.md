@@ -10,7 +10,7 @@ Domotic Lab is a project whose purpose is:
 The Raspberry Pi 3 is connected to an Adafruit BMP280 sensor and a LED.
 The Adafruit BMP280 sensor can measure temperature and barometric pressure.
 
-When the Raspberry boots up, the script firebase.py is launched from the script startup.sh that is executed from the file /etc/rc.local as follow:
+When the Raspberry boots up, the script [firebase.py] is launched from the script [startup.sh] that is executed from the file /etc/rc.local as follow:
 ```sh
 $ nano /etc/rc.local
 
@@ -129,3 +129,4 @@ SOFTWARE.
    [DomoticLab.html]: <https://github.com/RiccardoManoni/DomoticLab/blob/master/web/DomoticLab.html>
    [firebase.py]: <https://github.com/RiccardoManoni/DomoticLab/blob/master/RaspberryPi/firebase.py>
    [bmp280.py]: <https://github.com/RiccardoManoni/DomoticLab/blob/master/RaspberryPi/bmp280.py>
+   [startup.sh]: <https://github.com/RiccardoManoni/DomoticLab/blob/master/RaspberryPi/startup.sh>
