@@ -32,7 +32,7 @@ $ nano /etc/rc.local
 exit 0
 ```
 
-Every 15 minutes the Raspberry sends sensor values to the Firebase Realtime Database where they are stored. To do this I edited the contrab file as below where the script [bmp280.py] is executed every 15 minutes.
+Every 15 minutes the Raspberry sends sensor data to the Firebase Realtime Database where they are stored. To do this I edited the contrab file as below where the script [bmp280.py] is executed every 15 minutes.
  ```sh
 $ crontab -e
 
@@ -66,9 +66,9 @@ $ crontab -e
 45 * * * * python /home/pi/DomoticLab/bmp280.py
  ```
  
-We can read the sensor values and receive every update in real time from whether a browser or the iOS app. Data is synced across all clients (at the same time up to 100 clients for free) in real time thanks to the Firebase Realtime Database.
+We can read the sensor data and receive every update in real time from whether a browser or the iOS app. Data is synced across all clients (at the same time up to 100 clients for free) in real time thanks to the Firebase Realtime Database.
 
-I also installed a Web Server on my Raspberry Pi 3 (just for fun, of course not from a security point of view), this is why when the Raspberry boots, the Raspberry's public ip is stored on Firebase (see [firebase.py]). So when I want connect to my Raspberry Pi Web Server I can get his Public Ip through my iOS app or a browser.
+When the Raspberry boots up, I save the Raspberry's public ip and store it on the Firebase's database (see [firebase.py]). This might be useful if a decide to install a Web Server or other services on my Raspberry Pi.
 
 ### Components used
 - Raspberry Pi 3 with the Raspbian Jessie

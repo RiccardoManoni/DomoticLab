@@ -163,35 +163,27 @@ if (device.readS8(BMP280_REGISTER_CHIPID) == 0x58): # check sensor id 0x58=BMP28
     var1=dig_P9*press*press/2147483648.0 # formula for pressure from datasheet
     var2=press*dig_P8/32768.0 # formula for pressure from datasheet
     press=press+(var1+var2+dig_P7)/16.0 # formula for pressure from datasheet
-
-    #altitude= 44330.0 * (1.0 - pow(press / (QNH*100), (1.0/5.255))) # formula for altitude from airpressure
-    #print("temperature:{:.2f}".format(temp)+" C  pressure:{:.2f}".format(press/100)+" hPa   altitude:{:.2f}".format(altitude)+" m")
     
     temperature = '%.2f'%temp
-    #altitude = '%.2f'%altitude
     tmp_pressure = press/100
     pressure = '%.2f'%tmp_pressure
 
-    # Initialize Firebase
+    # Realtime Firebase Database
     config = {
-    "apiKey": "your-api-key",
+    "apiKey": "your-apiKey",
     "authDomain": "your-authDomain.firebaseapp.com",
-    "databaseURL": "https://your-databaseURL.firebaseio.com",
+    "databaseURL": "your-databaseURL.firebaseio.com",
     "storageBucket": "your-storageBucket.appspot.com"
     }
+
     firebase = pyrebase.initialize_app(config)
 
     db = firebase.database()
     db.update({"Temperature": temperature})
-    #db.update({"Altitude": altitude})
     db.update({"Pressure": pressure})
 
-	# get time and date to log
-	dateString = '%d/%m/%Y %H:%M:%S'
-	timeToSave = datetime.datetime.now().strftime(dateString)
-	#fb = open('/home/pi/DomoticLab/bmp280.txt','a+')
-	#fb.write(timeToSave + " - cTemp: " + truncated_cTemp + " fTemp: " + truncated_fTemp + " pressure: " + truncate$
-	#fb.write('\n')
-	#fb.close()
+    # get time and date to log
+    dateString = '%d/%m/%Y %H:%M:%S'
+    timeToSave = datetime.datetime.now().strftime(dateString)
 
-	db.update({"Updated": timeToSave})
+    db.update({"Updated": timeToSave})
