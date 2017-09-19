@@ -13,6 +13,8 @@
 		8BB1585A1F1B87F2005CC0AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BB158581F1B87F2005CC0AB /* Main.storyboard */; };
 		8BB1585C1F1B87F2005CC0AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BB1585B1F1B87F2005CC0AB /* Assets.xcassets */; };
 		8BB1585F1F1B87F2005CC0AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BB1585D1F1B87F2005CC0AB /* LaunchScreen.storyboard */; };
+		8BB265DB1F6F0312004B7671 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB265DA1F6F0312004B7671 /* TemperatureView.swift */; };
+		8BB265DE1F6F0D25004B7671 /* DegreesToRadians.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB265DD1F6F0D25004B7671 /* DegreesToRadians.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		8BB1585B1F1B87F2005CC0AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BB1585E1F1B87F2005CC0AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BB158601F1B87F2005CC0AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BB265DA1F6F0312004B7671 /* TemperatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureView.swift; sourceTree = "<group>"; };
+		8BB265DD1F6F0D25004B7671 /* DegreesToRadians.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegreesToRadians.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,12 +75,22 @@
 			children = (
 				8BB158541F1B87F2005CC0AB /* AppDelegate.swift */,
 				8BB158561F1B87F2005CC0AB /* ViewController.swift */,
+				8BB265DA1F6F0312004B7671 /* TemperatureView.swift */,
 				8BB158581F1B87F2005CC0AB /* Main.storyboard */,
 				8BB1585B1F1B87F2005CC0AB /* Assets.xcassets */,
 				8BB1585D1F1B87F2005CC0AB /* LaunchScreen.storyboard */,
 				8BB158601F1B87F2005CC0AB /* Info.plist */,
+				8BB265DC1F6F0CFB004B7671 /* Helper */,
 			);
 			path = DomoticLab;
+			sourceTree = "<group>";
+		};
+		8BB265DC1F6F0CFB004B7671 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				8BB265DD1F6F0D25004B7671 /* DegreesToRadians.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		EE7DB07093B8D930AB33A21C /* Pods */ = {
@@ -212,6 +226,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BB158571F1B87F2005CC0AB /* ViewController.swift in Sources */,
+				8BB265DE1F6F0D25004B7671 /* DegreesToRadians.swift in Sources */,
+				8BB265DB1F6F0312004B7671 /* TemperatureView.swift in Sources */,
 				8BB158551F1B87F2005CC0AB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

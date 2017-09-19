@@ -14,12 +14,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var buttonOpenIn: UIButton!
     @IBOutlet weak var buttonLed: UIButton!
     @IBOutlet weak var labelPublicIp: UILabel!
-    @IBOutlet weak var labelStatoLed: UILabel!
     @IBOutlet weak var labelPoweredBy: UILabel!
     
-    @IBOutlet weak var labelTemperature: UILabel!
+    //@IBOutlet weak var labelTemperature: UILabel!
     @IBOutlet weak var labelPressure: UILabel!
     @IBOutlet weak var labelLastUpdate: UILabel!
+    
+    @IBOutlet weak var temperatureView: TemperatureView!
     
     var ledStatus = ""
     var publicIp = ""
@@ -39,11 +40,8 @@ class ViewController: UIViewController {
         labelPublicIp.textColor = UIColor.white
         labelPublicIp.font = UIFont(name: "Avenir-Light", size: 20.0)
         
-        labelStatoLed.textColor = UIColor.white
-        labelStatoLed.font = UIFont(name: "Avenir-Light", size: 20.0)
-        
-        labelTemperature.textColor = UIColor.white
-        labelTemperature.font = UIFont(name: "Avenir-Light", size: 20.0)
+        //labelTemperature.textColor = UIColor.white
+        //labelTemperature.font = UIFont(name: "Avenir-Light", size: 20.0)
         
         labelPressure.textColor = UIColor.white
         labelPressure.font = UIFont(name: "Avenir-Light", size: 20.0)
@@ -79,7 +77,6 @@ class ViewController: UIViewController {
         // Led
         ref.child("Led").observe(.value, with: { (snapshot) in
             self.ledStatus = snapshot.value as! String
-            self.labelStatoLed.text = "Led: Led is \(self.ledStatus)"
             if(self.ledStatus == "On") {
                 self.buttonLed.setTitle("Turn Off Led", for: .normal)
             } else if(self.ledStatus == "Off") {
@@ -91,13 +88,9 @@ class ViewController: UIViewController {
         // Temperature
         ref.child("Temperature").observe(.value, with: { (snapshot) in
             self.temperature = snapshot.value as! String
-            self.labelTemperature.text = "Temperature °C: \(self.temperature)"
-        })
-        
-        ref.child("Temperature").observe(.value, with: { (snapshot) in
-            self.temperature = snapshot.value as! String
-            self.labelTemperature.text = "Temperature °C: \(self.temperature)"
-            print("viewDidLoad() Temperatura: \(String(describing: self.temperature))")
+            let cgFloatTemperature : CGFloat? = Double(self.temperature).map{ CGFloat($0) }
+            self.temperatureView.curValue = cgFloatTemperature!
+            print("Temperature °C: \(String(describing: cgFloatTemperature))")
         })
         
         // Pressure
@@ -126,11 +119,9 @@ class ViewController: UIViewController {
         if(self.ledStatus == "On") {
             //ref.updateChildValues(["Led":"Off"])
             ref.setValue("Off")
-            self.labelStatoLed.text = "Led: Led is Off"
         } else if(self.ledStatus == "Off") {
             //ref.updateChildValues(["Led":"On"])
             ref.setValue("On")
-            self.labelStatoLed.text = "Led: Led is On"
         }
     }
 
