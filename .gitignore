@@ -1,5 +1,12 @@
 # Xcode
 
+## OS X files
+.DS_Store
+.DS_Store?
+.Trashes
+.Spotlight-V100
+*.swp
+
 ## Build generated
 build/
 DerivedData/
@@ -17,6 +24,7 @@ xcuserdata/
 
 ## Other
 *.moved-aside
+*.xcuserstate
 *.xccheckout
 *.xcscmblueprint
 
