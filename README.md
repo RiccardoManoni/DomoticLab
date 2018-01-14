@@ -6,6 +6,8 @@ Domotic Lab is a project whose purpose is:
 
   - remotely turn on/off from a browser and/or an iOS app a LED (potentially any appliance) connected to the same Raspberry Pi 3 above
 
+![](https://github.com/RiccardoManoni/DomoticLab/blob/master/screenshot.png)
+
 ### How does it work?
 The Raspberry Pi 3 is connected to an Adafruit BMP280 sensor and a LED.
 The Adafruit BMP280 sensor can measure temperature and barometric pressure.
